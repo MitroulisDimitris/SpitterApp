@@ -5,26 +5,26 @@ import java.util.List;
 
 public class Spitter {
     private int id;
-    private String fname;
-    private String lname;
+    private String fisrtName;
+    private String lastName;
     private String password;
     private List<Spittle> spittles;
 
-    public Spitter(int id,String fname,  String lname, String password) {
+    public Spitter(int id, String fisrtName, String lastName, String password) {
         this.id = id;
-        this.fname = fname;
-        this.lname = lname;
+        this.fisrtName = fisrtName;
+        this.lastName = lastName;
         this.password = password;
         this.spittles = new ArrayList<>();
 
     }
 
-    public String getFname() {
-        return fname;
+    public String getFisrtName() {
+        return fisrtName;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setFisrtName(String fisrtName) {
+        this.fisrtName = fisrtName;
     }
 
     public int getId() {
@@ -35,12 +35,12 @@ public class Spitter {
         this.id = id;
     }
 
-    public String getLname() {
-        return lname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
@@ -67,8 +67,8 @@ public class Spitter {
     public String toString() {
         return "Spitter{" +
                 "id=" + id+
-                ",fname = "+fname+ '\''+
-                ",lname = "+lname+ '\''+
+                ",fname = "+ fisrtName + '\''+
+                ",lname = "+ lastName + '\''+
                 ",spittles = "+spittles.size()+
                 "}";
     }

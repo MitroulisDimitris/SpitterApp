@@ -52,12 +52,8 @@ public class SpitterService {
         if (existing == null){
             return false;
         }
-
         LocalDateTime timeOfChange = LocalDateTime.now();
-        String previousText = existing.getText();
-
         existing.setText(text);
-        existing.addChangeList(previousText, timeOfChange);
         return true;
     }
 

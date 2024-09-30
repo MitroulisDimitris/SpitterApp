@@ -1,7 +1,6 @@
 import spitterapp.domain.Spitter;
 import spitterapp.domain.Spittle;
 import spitterapp.service.SpitterService;
-import sun.security.provider.ConfigFile;
 
 import java.time.LocalDateTime;
 
@@ -19,8 +18,8 @@ public class Main {
 
         LocalDateTime now = LocalDateTime.now();
 
-        Spittle spittle1 = new Spittle(1,"hello",1,2,now);
-        Spittle spittle2 = new Spittle(2,"hello",2,1,now);
+        Spittle spittle1 = new Spittle(1,"hello",1, now);
+        Spittle spittle2 = new Spittle(2,"hello",2, now);
 
         service.createSpittle(spittle1);
         service.createSpittle(spittle2);

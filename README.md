@@ -13,5 +13,5 @@ Users can preform **CRUD** operations on users, messages
 ## Class Descriptions
 - **Main**: Main entry point to initialize application, creates data
 - **Splitter**: Represents a user with fname, lname, id, password, list of messages (Splittles).
-- **Splittle**: Represents a message with unique id, containing text, authorId, receiverid, sentDate, List to contain history of changes.
+- **Splittle**: Represents a message with unique id, containing text, authorId, sentDate.
 - **Splitter Service**: Contains methods for CRUD operations on Splitter and Splittle objects
