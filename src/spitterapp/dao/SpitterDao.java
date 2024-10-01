@@ -5,7 +5,7 @@ import java.util.List;
 public interface SpitterDao {
     Spitter findById(int id);
     List<Spitter> findAll();
-    void save(Spitter spitter);
+    void save(String firstName, String lastName, String password);
     void update(Spitter spitter);
     void delete(int id);
 }

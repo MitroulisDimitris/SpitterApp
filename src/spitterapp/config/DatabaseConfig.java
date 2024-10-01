@@ -20,8 +20,12 @@ public class DatabaseConfig {
     //Statement statement = conn.createStatement();
 
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection(){
+        try{
         return DriverManager.getConnection(url,user,password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static boolean closeConnection(Connection connection) {
