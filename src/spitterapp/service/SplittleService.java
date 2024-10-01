@@ -1,8 +1,9 @@
 package spitterapp.service;
 
-import spitterapp.domain.Spittle;
-
 import java.util.List;
+
+import spitterapp.model.Spittle;
+
 import java.util.ArrayList;
 
 

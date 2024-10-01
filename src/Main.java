@@ -1,5 +1,5 @@
-import spitterapp.domain.Spitter;
-import spitterapp.domain.Spittle;
+import spitterapp.model.Spitter;
+import spitterapp.model.Spittle;
 import spitterapp.service.SpitterService;
 import spitterapp.service.SplittleService;
 
