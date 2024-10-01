@@ -20,7 +20,7 @@ public class SplittleService {
 
     public void createSpittle(Spittle spittle){
         spittleDaoimpl.save(spittle.getText(), spittle.getAuthorId(),
-                (java.sql.Date) Date.from(spittle.getSentDate().atZone(ZoneId.systemDefault()).toInstant()));
+               spittle.getSentDate());
     }
 
     public Spittle getSpittle(int id){

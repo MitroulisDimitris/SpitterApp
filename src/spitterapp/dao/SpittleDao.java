@@ -8,7 +8,7 @@ import java.util.List;
 public interface SpittleDao {
     Spittle finById(int id);
     List<Spittle> findAll();
-    void save(String content, int authorId, Date datePosted);
+    void save(String content, int authorId, String datePosted);
     void update(Spittle spittle);
     void delete(int id);
 }

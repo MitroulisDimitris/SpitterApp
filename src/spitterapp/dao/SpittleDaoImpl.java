@@ -4,9 +4,6 @@ import spitterapp.config.DatabaseConfig;
 import spitterapp.model.Spittle;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +22,7 @@ public class SpittleDaoImpl implements SpittleDao {
                         id,
                         rs.getString("content"),
                         rs.getInt("authorId"),
-                        // def not optimal
-                        rs.getDate("datePosted").toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDateTime());
+                        rs.getString("datePosted"));
             }
 
         } catch (SQLException e) {
@@ -52,10 +46,7 @@ public class SpittleDaoImpl implements SpittleDao {
                         rs.getInt("messageId"),
                         rs.getString("content"),
                         rs.getInt("authorId"),
-                        // def not optimal
-                        rs.getDate("datePosted").toInstant()
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDateTime()));
+                        rs.getString("datePosted")));
             }
 
 
@@ -67,14 +58,14 @@ public class SpittleDaoImpl implements SpittleDao {
     }
 
     @Override
-    public void save(String content, int authorId, Date datePosted) {
+    public void save(String content, int authorId, String datePosted) {
         Connection conn = DatabaseConfig.getConnection();
         String query = "INSERT INTO MESSAGES (content, authorId, datePosted) VALUES (?, ?, ?)";
         try{
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1,content);
             ps.setInt(2,authorId);
-            ps.setDate(3,datePosted);
+            ps.setString(3,datePosted);
             ps.executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -91,7 +82,7 @@ public class SpittleDaoImpl implements SpittleDao {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, spittle.getText());
             ps.setInt(2, spittle.getAuthorId());
-            ps.setDate(3, (Date) Date.from(spittle.getSentDate().atZone(ZoneId.systemDefault()).toInstant()));
+            ps.setString(3, spittle.getSentDate());
             ps.setInt(4, spittle.getId());
 
 

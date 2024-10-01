@@ -6,10 +6,10 @@ public class Spittle {
     private int id;
     private String text;
     private int authorId;
-    private LocalDateTime sentDate;
+    private String sentDate;
 
 
-    public Spittle(int id, String text, int authorId, LocalDateTime sentDate) {
+    public Spittle(int id, String text, int authorId, String sentDate) {
         this.id = id;
         this.text = text;
         this.authorId = authorId;
@@ -37,11 +37,11 @@ public class Spittle {
         this.authorId = authorId;
     }
 
-    public LocalDateTime getSentDate() {
+    public String getSentDate() {
         return sentDate;
     }
 
-    public void setSentDate(LocalDateTime sentDate) {
+    public void setSentDate(String sentDate) {
         this.sentDate = sentDate;
     }
 

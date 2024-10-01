@@ -4,10 +4,7 @@ import spitterapp.model.Spittle;
 import spitterapp.service.SpitterService;
 import spitterapp.service.SplittleService;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
-
-import java.time.LocalDateTime;
 
 
 public class Main {
@@ -24,10 +21,9 @@ public class Main {
         spitterService.createSpitter(spitter1);
         spitterService.createSpitter(spitter2);
 
-        LocalDateTime now = LocalDateTime.now();
 
-        Spittle spittle1 = new Spittle(1,"hello",1, now);
-        Spittle spittle2 = new Spittle(2,"hello",2, now);
+        Spittle spittle1 = new Spittle(1,"hello",1, "1/12/2023");
+        Spittle spittle2 = new Spittle(2,"hello",2, "1/12/2023");
 
         spittleService.createSpittle(spittle1);
         spittleService.createSpittle(spittle2);
@@ -38,18 +34,6 @@ public class Main {
         System.out.println(spitterService.getSpitter(1));
         System.out.println(spitterService.getSpitter(2));
 
-
-        Connection conn  = DatabaseConfig.getConnection();
-        Statement stmt = conn.createStatement();
-
-        String sql = "Select * from Users";
-        ResultSet rs = stmt.executeQuery(sql);
-
-        while (rs.next()) {
-            System.out.println(rs.getString("firstName"));
-        }
-
-        conn.close();
 
 
     }
