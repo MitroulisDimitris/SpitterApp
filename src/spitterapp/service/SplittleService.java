@@ -1,39 +1,37 @@
 package spitterapp.service;
 
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
+import spitterapp.dao.SpitterDaoImpl;
+import spitterapp.dao.SpittleDaoImpl;
 import spitterapp.model.Spittle;
 
 import java.util.ArrayList;
 
 
 public class SplittleService {
-    private List<Spittle> spittles;
-
+    SpittleDaoImpl spittleDaoimpl;
 
     public SplittleService(){
-        this.spittles = new ArrayList<>();
+         spittleDaoimpl = new SpittleDaoImpl();
     }
 
-    //CRUD operations for Spittle (MESSAGES)
     public void createSpittle(Spittle spittle){
-        spittles.add(spittle);
+        spittleDaoimpl.save(spittle.getText(), spittle.getAuthorId(),
+                (java.sql.Date) Date.from(spittle.getSentDate().atZone(ZoneId.systemDefault()).toInstant()));
     }
+
     public Spittle getSpittle(int id){
-        return spittles.stream().filter(sp-> sp.getId() == id).findFirst().orElse(null);
+        return spittleDaoimpl.finById(id);
     }
 
-    public boolean UpdateSpitter (int id, String text){
-        Spittle existing = getSpittle(id);
-        if (existing == null){
-            return false;
-        }
-        existing.setText(text);
-        return true;
+    public void UpdateSpitter (Spittle spittle){
+       spittleDaoimpl.update(spittle);
     }
 
-    public boolean deleteSpittle(int id){
-        return spittles.removeIf(sp -> sp.getId() == id);
-        
+    public void deleteSpittle(int id){
+        spittleDaoimpl.delete(id);
     }
 }

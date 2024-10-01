@@ -38,7 +38,6 @@ public class Main {
         System.out.println(spitterService.getSpitter(1));
         System.out.println(spitterService.getSpitter(2));
 
-        System.out.println(spitterService.deleteSpitter(2));
 
         Connection conn  = DatabaseConfig.getConnection();
         Statement stmt = conn.createStatement();

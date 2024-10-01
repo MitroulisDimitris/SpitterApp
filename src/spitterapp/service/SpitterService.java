@@ -2,37 +2,37 @@ package spitterapp.service;
 
 import java.util.List;
 
+import spitterapp.dao.SpitterDaoImpl;
 import spitterapp.model.Spitter;
 
 import java.util.ArrayList;
 
 public class SpitterService {
     private List<Spitter> spitters;
-    
+    private final SpitterDaoImpl spitterDaoImpl;
+
     public SpitterService(){
         this.spitters = new ArrayList<>();
+        this.spitterDaoImpl = new SpitterDaoImpl();
     }
-    // CRUD for spitter (USER)
+
     public void createSpitter(Spitter spitter){
+        spitterDaoImpl.save(spitter.getFisrtName(),spitter.getLastName(),spitter.getPassword());
+
         spitters.add(spitter);
     }
 
     public Spitter getSpitter(int id){
-        return spitters.stream().filter(sp -> sp.getId() == id).findFirst().orElse(null);
+
+        return spitterDaoImpl.findById(id);
     }
 
-    public boolean updateSpitter(Spitter spitter){
-        Spitter existing = getSpitter(spitter.getId());
-        if (existing != null){
-            existing = spitter;
-            return true;
-        }else{
-            return false;
-        }
+    public void updateSpitter(Spitter spitter){
+        spitterDaoImpl.update(spitter);
     }
 
-    public boolean deleteSpitter(int id) {
-    return  spitters.removeIf(sp -> sp.getId() == id);
+    public void deleteSpitter(int id) {
+        spitterDaoImpl.delete(id);
     }
 
     
