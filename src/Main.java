@@ -1,14 +1,19 @@
+import spitterapp.config.DatabaseConfig;
 import spitterapp.model.Spitter;
 import spitterapp.model.Spittle;
 import spitterapp.service.SpitterService;
 import spitterapp.service.SplittleService;
 
+import javax.xml.crypto.Data;
+import java.sql.*;
 
 import java.time.LocalDateTime;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+
+
 
         SpitterService spitterService = new SpitterService();
         SplittleService spittleService = new SplittleService();
@@ -34,6 +39,19 @@ public class Main {
         System.out.println(spitterService.getSpitter(2));
 
         System.out.println(spitterService.deleteSpitter(2));
+
+        Connection conn  = DatabaseConfig.getConnection();
+        Statement stmt = conn.createStatement();
+
+        String sql = "Select * from Users";
+        ResultSet rs = stmt.executeQuery(sql);
+
+        while (rs.next()) {
+            System.out.println(rs.getString("firstName"));
+        }
+
+        conn.close();
+
 
     }
 }
