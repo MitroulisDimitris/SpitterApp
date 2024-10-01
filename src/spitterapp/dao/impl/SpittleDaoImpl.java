@@ -1,6 +1,7 @@
-package spitterapp.dao;
+package spitterapp.dao.impl;
 
 import spitterapp.config.DatabaseConfig;
+import spitterapp.dao.SpittleDao;
 import spitterapp.model.Spittle;
 
 import java.sql.*;
@@ -14,6 +15,7 @@ public class SpittleDaoImpl implements SpittleDao {
         Spittle spittle = null;
         String query = "SELECT * FROM MESSAGES WHERE id = ?";
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -24,9 +26,17 @@ public class SpittleDaoImpl implements SpittleDao {
                         rs.getInt("authorId"),
                         rs.getString("datePosted"));
             }
+            conn.commit();
 
         } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
             throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
         }
         return spittle;
     }
@@ -38,6 +48,7 @@ public class SpittleDaoImpl implements SpittleDao {
         String query = "SELECT * FROM MESSAGES";
 
         try{
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
@@ -49,11 +60,18 @@ public class SpittleDaoImpl implements SpittleDao {
                         rs.getString("datePosted")));
             }
 
+            conn.commit();
 
         } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
             throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
         }
-        DatabaseConfig.closeConnection(conn);
         return spittles;
     }
 
@@ -62,15 +80,24 @@ public class SpittleDaoImpl implements SpittleDao {
         Connection conn = DatabaseConfig.getConnection();
         String query = "INSERT INTO MESSAGES (content, authorId, datePosted) VALUES (?, ?, ?)";
         try{
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1,content);
             ps.setInt(2,authorId);
             ps.setString(3,datePosted);
             ps.executeUpdate();
-        } catch (Exception e) {
+            conn.commit();  // Commit the transaction
+
+        } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
             throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
         }
-        DatabaseConfig.closeConnection(conn);
     }
 
     @Override
@@ -79,17 +106,24 @@ public class SpittleDaoImpl implements SpittleDao {
         String query = "UPDATE USERS SET content=?, authorId=?, datePosted=? WHERE messageId=?";
 
         try{
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, spittle.getText());
             ps.setInt(2, spittle.getAuthorId());
             ps.setString(3, spittle.getSentDate());
             ps.setInt(4, spittle.getId());
 
-
-        } catch (Exception e) {
+            conn.commit();
+        } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
             throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
         }
-        DatabaseConfig.closeConnection(conn);
     }
 
     @Override
@@ -97,13 +131,21 @@ public class SpittleDaoImpl implements SpittleDao {
         Connection conn = DatabaseConfig.getConnection();
         String query = "DELETE FROM MESSAGES WHERE messageId=?";
         try{
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+            conn.commit();  // Commit the transaction
 
-        DatabaseConfig.closeConnection(conn);
+        } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
+            throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
+        }
     }
 }

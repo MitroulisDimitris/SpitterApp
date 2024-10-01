@@ -1,14 +1,7 @@
 package spitterapp.service;
 
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-
-import spitterapp.dao.SpitterDaoImpl;
-import spitterapp.dao.SpittleDaoImpl;
+import spitterapp.dao.impl.SpittleDaoImpl;
 import spitterapp.model.Spittle;
-
-import java.util.ArrayList;
 
 
 public class SplittleService {

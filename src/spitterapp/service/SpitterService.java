@@ -2,7 +2,7 @@ package spitterapp.service;
 
 import java.util.List;
 
-import spitterapp.dao.SpitterDaoImpl;
+import spitterapp.dao.impl.SpitterDaoImpl;
 import spitterapp.model.Spitter;
 
 import java.util.ArrayList;

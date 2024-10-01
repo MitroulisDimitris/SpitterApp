@@ -1,9 +1,10 @@
-package spitterapp.dao;
+package spitterapp.dao.impl;
 
 
 import java.sql.Connection;
 
 import spitterapp.config.DatabaseConfig;
+import spitterapp.dao.SpitterDao;
 import spitterapp.model.Spitter;
 
 import java.sql.PreparedStatement;
@@ -12,16 +13,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpitterDaoImpl implements SpitterDao{
+public class SpitterDaoImpl implements SpitterDao {
 
 
     @Override
     public Spitter findById(int id) {
-        Connection conn = DatabaseConfig.getConnection();
-        Spitter spitter = null;
+        Connection conn = null;
+        Spitter spitter= null;
         String query = "Select * from USERS where userId=?";
 
         try {
+
+            conn = DatabaseConfig.getConnection();
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -33,10 +37,17 @@ public class SpitterDaoImpl implements SpitterDao{
                         rs.getString("lastName"),
                         rs.getString("password"));
             }
+            conn.commit();
         } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
             throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
         }
-        DatabaseConfig.closeConnection(conn);
         return spitter;
     }
 
@@ -48,6 +59,7 @@ public class SpitterDaoImpl implements SpitterDao{
         String query = "Select * from USERS";
 
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
@@ -57,13 +69,21 @@ public class SpitterDaoImpl implements SpitterDao{
                         rs.getString("firstName"),
                         rs.getString("lastName"),
                         rs.getString("password")));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        DatabaseConfig.closeConnection(conn);
-        return spitters;
 
+            }
+            conn.commit();
+
+        } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
+            throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
+        }
+        return spitters;
     }
 
     @Override
@@ -71,15 +91,24 @@ public class SpitterDaoImpl implements SpitterDao{
         Connection conn = DatabaseConfig.getConnection();
         String query = "INSERT INTO USERS (firstName, lastname, password) VALUES (?, ?, ?)";
         try{
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1,firstName);
             ps.setString(2,lastName);
             ps.setString(3,password);
             ps.executeUpdate();
-        } catch (Exception e) {
+
+            conn.commit();
+        } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
             throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
         }
-        DatabaseConfig.closeConnection(conn);
     }
 
     @Override
@@ -88,31 +117,48 @@ public class SpitterDaoImpl implements SpitterDao{
         String query = "UPDATE USERS SET firstName=?, lastName=?, password=? WHERE userId=?";
 
         try{
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, spitter.getFisrtName());
             ps.setString(2, spitter.getLastName());
             ps.setString(3, spitter.getPassword());
             ps.setInt(4, spitter.getId());
 
-        } catch (Exception e) {
+            conn.commit();
+
+        } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
             throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
         }
-        DatabaseConfig.closeConnection(conn);
     }
 
     @Override
     public void delete(int id) {
         Connection conn = DatabaseConfig.getConnection();
         String query = "DELETE FROM USERS WHERE userId=?";
-        try{
+        try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+            conn.commit();  // Commit the transaction
 
-        DatabaseConfig.closeConnection(conn);
+        } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback in case of an error
+            } catch (SQLException ex) {
+                throw new RuntimeException("Rollback failed", ex);
+            }
+            throw new RuntimeException(e);
+        } finally {
+            DatabaseConfig.closeConnection(conn);
+        }
     }
 }
 
