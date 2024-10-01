@@ -36,6 +36,7 @@ public class SpitterDaoImpl implements SpitterDao{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        DatabaseConfig.closeConnection(conn);
         return spitter;
     }
 
@@ -60,6 +61,7 @@ public class SpitterDaoImpl implements SpitterDao{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        DatabaseConfig.closeConnection(conn);
         return spitters;
 
     }
@@ -77,6 +79,7 @@ public class SpitterDaoImpl implements SpitterDao{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        DatabaseConfig.closeConnection(conn);
     }
 
     @Override
@@ -94,6 +97,7 @@ public class SpitterDaoImpl implements SpitterDao{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        DatabaseConfig.closeConnection(conn);
     }
 
     @Override
@@ -108,7 +112,7 @@ public class SpitterDaoImpl implements SpitterDao{
             throw new RuntimeException(e);
         }
 
-
+        DatabaseConfig.closeConnection(conn);
     }
 }
 
