@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jta-1_1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Desktop/libraries/jta-1_1.jar/jta-1_1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
