@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jaxb-runtime-4.0.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Downloads/jaxb-runtime-4.0.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Downloads/jakarta.activation-api-2.1.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
