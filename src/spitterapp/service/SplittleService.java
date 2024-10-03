@@ -1,7 +1,7 @@
 package spitterapp.service;
 
 import spitterapp.dao.impl.SpittleDaoImpl;
-import spitterapp.model.Spittle;
+import spitterapp.entities.SpittleEnt;
 
 
 public class SplittleService {
@@ -11,16 +11,16 @@ public class SplittleService {
          spittleDaoimpl = new SpittleDaoImpl();
     }
 
-    public void createSpittle(Spittle spittle){
-        spittleDaoimpl.save(spittle.getText(), spittle.getAuthorId(),
-               spittle.getSentDate());
+    public void createSpittle(SpittleEnt spittle){
+        //spittleDaoimpl.save(spittle.getText(), spittle.getAuthorId(),
+        //       spittle.getSentDate());
     }
 
-    public Spittle getSpittle(int id){
+    public SpittleEnt getSpittle(int id){
         return spittleDaoimpl.finById(id);
     }
 
-    public void UpdateSpitter (Spittle spittle){
+    public void UpdateSpitter (SpittleEnt spittle){
        spittleDaoimpl.update(spittle);
     }
 

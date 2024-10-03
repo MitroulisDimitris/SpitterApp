@@ -3,7 +3,7 @@ package spitterapp.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "MESSAGE")
+@Table(name = "SpittleEnt")
 public class SpittleEnt {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

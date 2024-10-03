@@ -3,161 +3,133 @@ package spitterapp.dao.impl;
 
 import java.sql.Connection;
 
-import spitterapp.config.DatabaseConfig;
+import org.hibernate.HibernateException;
+import org.hibernate.Transaction;
+import org.hibernate.Session;
+import org.hibernate.Query;
+import spitterapp.config.HibernateUtil;
 import spitterapp.dao.SpitterDao;
-import spitterapp.model.Spitter;
+import spitterapp.entities.SpitterEnt;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SpitterDaoImpl implements SpitterDao {
 
-
     @Override
-    public Spitter findById(int id) {
-        Connection conn = null;
-        Spitter spitter= null;
-        String query = "Select * from USERS where userId=?";
+    public SpitterEnt findById(int id) {
+        Transaction transaction = null;
+        SpitterEnt spitter = null;
+        HibernateUtil hibernateUtil = new HibernateUtil();
 
-        try {
+        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
 
-            conn = DatabaseConfig.getConnection();
-            conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            spitter = session.get(SpitterEnt.class,id);
+            transaction.commit();
 
-            if (rs.next()) {
-                spitter = new Spitter(
-                        rs.getInt("userId"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
-                        rs.getString("password"));
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback(); // Rollback the transaction in case of failure
             }
-            conn.commit();
-        } catch (SQLException e) {
-            try {
-                conn.rollback();  // Rollback in case of an error
-            } catch (SQLException ex) {
-                throw new RuntimeException("Rollback failed", ex);
-            }
-            throw new RuntimeException(e);
-        } finally {
-            DatabaseConfig.closeConnection(conn);
+            throw new RuntimeException(String.valueOf(e));
         }
         return spitter;
     }
 
     @Override
-    public List<Spitter> findAll() {
-        List<Spitter> spitters = new ArrayList<>();
+    public List<SpitterEnt> findAll() {
+        Transaction transaction = null;
+        List<SpitterEnt> spitters = null;
+        HibernateUtil hibernateUtil = new HibernateUtil();
 
-        Connection conn = DatabaseConfig.getConnection();
-        String query = "Select * from USERS";
+        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
 
-        try {
-            conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+            // Get all SpitterEnt Entities
+            Query<SpitterEnt> query = session.createQuery("from SpitterEnt",SpitterEnt.class);
+            spitters = query.getResultList();
 
-            while(rs.next()) {
-                spitters.add(new Spitter(
-                        rs.getInt("userId"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
-                        rs.getString("password")));
+            transaction.commit();
 
+        }catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
             }
-            conn.commit();
-
-        } catch (SQLException e) {
-            try {
-                conn.rollback();  // Rollback in case of an error
-            } catch (SQLException ex) {
-                throw new RuntimeException("Rollback failed", ex);
-            }
-            throw new RuntimeException(e);
-        } finally {
-            DatabaseConfig.closeConnection(conn);
+            throw new RuntimeException(String.valueOf(e));
         }
+
         return spitters;
     }
 
     @Override
-    public void save(String firstName, String lastName, String password) {
-        Connection conn = DatabaseConfig.getConnection();
-        String query = "INSERT INTO USERS (firstName, lastname, password) VALUES (?, ?, ?)";
-        try{
-            conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1,firstName);
-            ps.setString(2,lastName);
-            ps.setString(3,password);
-            ps.executeUpdate();
+    public void save(SpitterEnt spitter) {
+        Transaction transaction = null;
+        HibernateUtil hibernateUtil = new HibernateUtil();
 
-            conn.commit();
-        } catch (SQLException e) {
-            try {
-                conn.rollback();  // Rollback in case of an error
-            } catch (SQLException ex) {
-                throw new RuntimeException("Rollback failed", ex);
+        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.save(spitter);
+            transaction.commit();
+
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();  // Rollback the transaction in case of error
             }
             throw new RuntimeException(e);
-        } finally {
-            DatabaseConfig.closeConnection(conn);
         }
+
+
     }
 
     @Override
-    public void update(Spitter spitter) {
-        Connection conn = DatabaseConfig.getConnection();
-        String query = "UPDATE USERS SET firstName=?, lastName=?, password=? WHERE userId=?";
+    public void update(SpitterEnt spitter) {
+        Transaction transaction = null;
+        HibernateUtil hibernateUtil = new HibernateUtil();
 
-        try{
-            conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, spitter.getFisrtName());
-            ps.setString(2, spitter.getLastName());
-            ps.setString(3, spitter.getPassword());
-            ps.setInt(4, spitter.getId());
+        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            SpitterEnt existingSpitter = session.get(SpitterEnt.class, spitter.getUserId());
 
-            conn.commit();
+            if (existingSpitter != null){
+                existingSpitter.setFirstName(spitter.getFirstName());
+                existingSpitter.setFirstName(spitter.getLastName());
+                existingSpitter.setFirstName(spitter.getPassword());
+            } else {
+                throw new RuntimeException();
 
-        } catch (SQLException e) {
-            try {
-                conn.rollback();  // Rollback in case of an error
-            } catch (SQLException ex) {
-                throw new RuntimeException("Rollback failed", ex);
+            }
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();  // Rollback in case of error
             }
             throw new RuntimeException(e);
-        } finally {
-            DatabaseConfig.closeConnection(conn);
         }
+
     }
 
     @Override
     public void delete(int id) {
-        Connection conn = DatabaseConfig.getConnection();
-        String query = "DELETE FROM USERS WHERE userId=?";
-        try {
-            conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            conn.commit();  // Commit the transaction
+        Transaction transaction = null;
 
-        } catch (SQLException e) {
-            try {
-                conn.rollback();  // Rollback in case of an error
-            } catch (SQLException ex) {
-                throw new RuntimeException("Rollback failed", ex);
+        HibernateUtil hibernateUtil = new HibernateUtil();
+
+        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            SpitterEnt spitter = session.get(SpitterEnt.class , id);
+            if(spitter != null){
+                session.delete(spitter);
+
+            }else{
+                throw new RuntimeException();
+            }
+            transaction.commit();
+
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();  // Rollback in case of error
             }
             throw new RuntimeException(e);
-        } finally {
-            DatabaseConfig.closeConnection(conn);
         }
     }
 }

@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "SpitterEnt")
 public class SpitterEnt {
 
     // Map userId to primary Key with  autoincrement
@@ -22,6 +22,17 @@ public class SpitterEnt {
 
     @Column(name = "password", nullable = false,length = 50)
     private String password;
+
+    public SpitterEnt(String firstName, String lastName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+    }
+
+    public SpitterEnt() {
+
+    }
+
 
     public int getUserId() {
         return userId;

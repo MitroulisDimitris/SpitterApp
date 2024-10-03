@@ -3,31 +3,28 @@ package spitterapp.service;
 import java.util.List;
 
 import spitterapp.dao.impl.SpitterDaoImpl;
-import spitterapp.model.Spitter;
+import spitterapp.entities.SpitterEnt;
 
 import java.util.ArrayList;
 
 public class SpitterService {
-    private List<Spitter> spitters;
     private final SpitterDaoImpl spitterDaoImpl;
 
     public SpitterService(){
-        this.spitters = new ArrayList<>();
         this.spitterDaoImpl = new SpitterDaoImpl();
     }
 
-    public void createSpitter(Spitter spitter){
-        spitterDaoImpl.save(spitter.getFisrtName(),spitter.getLastName(),spitter.getPassword());
-
-        spitters.add(spitter);
+    public void createSpitter(String firstName, String lastName, String password) {
+        SpitterEnt spitterEnt = new SpitterEnt(firstName,lastName,password);
+        spitterDaoImpl.save(spitterEnt);
     }
 
-    public Spitter getSpitter(int id){
+    public SpitterEnt getSpitter(int id){
 
         return spitterDaoImpl.findById(id);
     }
 
-    public void updateSpitter(Spitter spitter){
+    public void updateSpitter(SpitterEnt spitter){
         spitterDaoImpl.update(spitter);
     }
 

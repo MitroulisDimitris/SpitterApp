@@ -1,4 +1,5 @@
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
@@ -9,6 +10,13 @@
         <property name="hibernate.connection.password">mySqlPass</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
+        <!-- JDBC connection pool settings -->
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.timeout">300</property>
+        <property name="hibernate.c3p0.max_statements">50</property>
+        <property name="hibernate.c3p0.idle_test_period">3000</property>
+
         <!-- Echo all executed SQL to stdout -->
         <property name="hibernate.show_sql">true</property>
 
@@ -17,7 +25,7 @@
 
         <!-- Mapping class -->
         <mapping class="spitterapp.entities.SpitterEnt" />
-    <mapping class="spitterapp.entities.SpittleEnt" />
+        <mapping class="spitterapp.entities.SpittleEnt" />
 
     </session-factory>
 </hibernate-configuration>
