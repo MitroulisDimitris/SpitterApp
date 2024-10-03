@@ -20,7 +20,6 @@ public class SpitterService {
     }
 
     public SpitterEnt getSpitter(int id){
-
         return spitterDaoImpl.findById(id);
     }
 

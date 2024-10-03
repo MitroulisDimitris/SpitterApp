@@ -9,7 +9,7 @@ import java.util.List;
 public interface SpittleDao {
     SpittleEnt finById(int id);
     List<SpittleEnt> findAll();
-    void save(String content, int authorId, String datePosted);
+    void save(SpittleEnt spittle);
     void update(SpittleEnt spittle);
     void delete(int id);
 }

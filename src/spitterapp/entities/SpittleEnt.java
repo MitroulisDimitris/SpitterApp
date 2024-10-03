@@ -20,6 +20,16 @@ public class SpittleEnt {
     @JoinColumn(name = "authorId", nullable = false)
     private SpitterEnt autorId;
 
+    public SpittleEnt(String content, String datePosted, SpitterEnt autorId) {
+        this.content = content;
+        this.datePosted = datePosted;
+        this.autorId = autorId;
+    }
+
+    public SpittleEnt() {
+
+    }
+
     public int getMessageId() {
         return messageId;
     }

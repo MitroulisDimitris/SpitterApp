@@ -92,8 +92,8 @@ public class SpitterDaoImpl implements SpitterDao {
 
             if (existingSpitter != null){
                 existingSpitter.setFirstName(spitter.getFirstName());
-                existingSpitter.setFirstName(spitter.getLastName());
-                existingSpitter.setFirstName(spitter.getPassword());
+                existingSpitter.setLastName(spitter.getLastName());
+                existingSpitter.setPassword(spitter.getPassword());
             } else {
                 throw new RuntimeException();
 
