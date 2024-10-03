@@ -10,8 +10,6 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
-
-
         SpitterService spitterService = new SpitterService();
         SplittleService spittleService = new SplittleService();
 
