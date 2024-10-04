@@ -1,15 +1,13 @@
 package spitterapp.dao;
 
-import spitterapp.entities.SpittleEnt;
-import spitterapp.entities.SpittleEnt;
+import spitterapp.entities.Spittle;
 
-import java.sql.Date;
 import java.util.List;
 
 public interface SpittleDao {
-    SpittleEnt finById(int id);
-    List<SpittleEnt> findAll();
-    void save(SpittleEnt spittle);
-    void update(SpittleEnt spittle);
+    Spittle finById(int id);
+    List<Spittle> findAll();
+    void save(Spittle spittle);
+    void update(Spittle spittle);
     void delete(int id);
 }

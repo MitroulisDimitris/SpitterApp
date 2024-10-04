@@ -3,24 +3,23 @@ package spitterapp.dao.impl;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.id.uuid.StandardRandomStrategy;
 import spitterapp.config.HibernateUtil;
 import spitterapp.dao.SpittleDao;
-import spitterapp.entities.SpittleEnt;
+import spitterapp.entities.Spittle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpittleDaoImpl implements SpittleDao {
     @Override
-    public SpittleEnt finById(int id) {
-        SpittleEnt spittleEnt = null;
+    public Spittle finById(int id) {
+        Spittle spittle = null;
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            spittleEnt = session.get(SpittleEnt.class, id);
+            spittle = session.get(Spittle.class, id);
             transaction.commit();
 
         } catch (Exception e) {
@@ -30,7 +29,7 @@ public class SpittleDaoImpl implements SpittleDao {
             throw new RuntimeException("Failed to fetch SpittleEnt with id: " + id, e);
         }
 
-        return spittleEnt;  // Return the fetched SpittleEnt entity
+        return spittle;  // Return the fetched SpittleEnt entity
 
     }
 
@@ -44,7 +43,7 @@ public class SpittleDaoImpl implements SpittleDao {
             transaction = session.beginTransaction();
 
             //Get all spittles
-            spittleEnts = session.createQuery("from SpittleEnt").getResultList();
+            spittleEnts = session.createQuery("from Spittle").getResultList();
 
             transaction.commit();
         }catch (HibernateException e) {
@@ -58,7 +57,7 @@ public class SpittleDaoImpl implements SpittleDao {
     }
 
     @Override
-    public void save(SpittleEnt spittle) {
+    public void save(Spittle spittle) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
@@ -75,13 +74,13 @@ public class SpittleDaoImpl implements SpittleDao {
     }
 
     @Override
-    public void update(SpittleEnt spittle) {
+    public void update(Spittle spittle) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            SpittleEnt existingSpittle = session.get(SpittleEnt.class, spittle.getMessageId());
+            Spittle existingSpittle = session.get(Spittle.class, spittle.getMessageId());
 
             if (existingSpittle != null){
                 existingSpittle.setContent(spittle.getContent());
@@ -101,7 +100,7 @@ public class SpittleDaoImpl implements SpittleDao {
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            SpittleEnt spittle = session.get(SpittleEnt.class , id);
+            Spittle spittle = session.get(Spittle.class , id);
             if(spittle != null){
                 session.delete(spittle);
 

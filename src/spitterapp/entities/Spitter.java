@@ -2,13 +2,13 @@ package spitterapp.entities;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
 @Table(name = "SpitterEnt")
-public class SpitterEnt {
+public class Spitter {
 
-    // Map userId to primary Key with  autoincrement
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
@@ -23,16 +23,20 @@ public class SpitterEnt {
     @Column(name = "password", nullable = false,length = 50)
     private String password;
 
-    public SpitterEnt(String firstName, String lastName, String password) {
+    // cascade -> operations are preformed on the child as well
+    // orhpanRemoval -> delete childs in case tha parent gets deleted
+    @OneToMany(mappedBy = "spitter",cascade = CascadeType.ALL, orphanRemoval = false)
+    private List<Spittle> spittleList;
+
+    public Spitter(String firstName, String lastName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
     }
 
-    public SpitterEnt() {
+    public Spitter() {
 
     }
-
 
     public int getUserId() {
         return userId;

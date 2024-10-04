@@ -1,5 +1,5 @@
-import spitterapp.entities.SpitterEnt;
-import spitterapp.entities.SpittleEnt;
+import spitterapp.entities.Spitter;
+import spitterapp.entities.Spittle;
 import spitterapp.service.SpitterService;
 import spitterapp.service.SplittleService;
 
@@ -15,12 +15,12 @@ public class Main {
 
         spitterService.createSpitter("John", "Doe", "password123");
         // Read Spitter by ID
-        SpitterEnt spitter = spitterService.getSpitter(1);
+        Spitter spitter = spitterService.getSpitter(1);
         System.out.println("Retrieved Spitter: " + spitter.getFirstName());
 
         spittleService.createSpittle("some content","15/10/2025",spitter);
         // Read Spitter by ID
-        SpittleEnt spittle = spittleService.getSpittle(1);
+        Spittle spittle = spittleService.getSpittle(1);
         System.out.println("Retrieved Spittle: " + spittle.getContent());
     }
 }

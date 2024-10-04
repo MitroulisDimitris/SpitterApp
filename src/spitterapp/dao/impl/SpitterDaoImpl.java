@@ -1,30 +1,28 @@
 package spitterapp.dao.impl;
 
 
-import java.sql.Connection;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.Query;
 import spitterapp.config.HibernateUtil;
 import spitterapp.dao.SpitterDao;
-import spitterapp.entities.SpitterEnt;
+import spitterapp.entities.Spitter;
 
 import java.util.List;
 
 public class SpitterDaoImpl implements SpitterDao {
 
     @Override
-    public SpitterEnt findById(int id) {
+    public Spitter findById(int id) {
         Transaction transaction = null;
-        SpitterEnt spitter = null;
+        Spitter spitter = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            spitter = session.get(SpitterEnt.class,id);
+            spitter = session.get(Spitter.class,id);
             transaction.commit();
 
         } catch (HibernateException e) {
@@ -37,16 +35,16 @@ public class SpitterDaoImpl implements SpitterDao {
     }
 
     @Override
-    public List<SpitterEnt> findAll() {
+    public List<Spitter> findAll() {
         Transaction transaction = null;
-        List<SpitterEnt> spitters = null;
+        List<Spitter> spitters = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
             // Get all SpitterEnt Entities
-            Query<SpitterEnt> query = session.createQuery("from SpitterEnt",SpitterEnt.class);
+            Query<Spitter> query = session.createQuery("from Spitter", Spitter.class);
             spitters = query.getResultList();
 
             transaction.commit();
@@ -62,7 +60,7 @@ public class SpitterDaoImpl implements SpitterDao {
     }
 
     @Override
-    public void save(SpitterEnt spitter) {
+    public void save(Spitter spitter) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
@@ -82,13 +80,13 @@ public class SpitterDaoImpl implements SpitterDao {
     }
 
     @Override
-    public void update(SpitterEnt spitter) {
+    public void update(Spitter spitter) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            SpitterEnt existingSpitter = session.get(SpitterEnt.class, spitter.getUserId());
+            Spitter existingSpitter = session.get(Spitter.class, spitter.getUserId());
 
             if (existingSpitter != null){
                 existingSpitter.setFirstName(spitter.getFirstName());
@@ -116,7 +114,7 @@ public class SpitterDaoImpl implements SpitterDao {
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            SpitterEnt spitter = session.get(SpitterEnt.class , id);
+            Spitter spitter = session.get(Spitter.class , id);
             if(spitter != null){
                 session.delete(spitter);
 

@@ -1,11 +1,11 @@
 package spitterapp.dao;
-import spitterapp.entities.SpitterEnt;
+import spitterapp.entities.Spitter;
 import java.util.List;
 
 public interface SpitterDao {
-    SpitterEnt findById(int id);
-    List<SpitterEnt> findAll();
-    void save(SpitterEnt spitter);
-    void update(SpitterEnt spitter);
+    Spitter findById(int id);
+    List<Spitter> findAll();
+    void save(Spitter spitter);
+    void update(Spitter spitter);
     void delete(int id);
 }

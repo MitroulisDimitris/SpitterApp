@@ -1,11 +1,7 @@
 package spitterapp.service;
 
-import java.util.List;
-
 import spitterapp.dao.impl.SpitterDaoImpl;
-import spitterapp.entities.SpitterEnt;
-
-import java.util.ArrayList;
+import spitterapp.entities.Spitter;
 
 public class SpitterService {
     private final SpitterDaoImpl spitterDaoImpl;
@@ -15,15 +11,15 @@ public class SpitterService {
     }
 
     public void createSpitter(String firstName, String lastName, String password) {
-        SpitterEnt spitterEnt = new SpitterEnt(firstName,lastName,password);
-        spitterDaoImpl.save(spitterEnt);
+        Spitter spitter = new Spitter(firstName,lastName,password);
+        spitterDaoImpl.save(spitter);
     }
 
-    public SpitterEnt getSpitter(int id){
+    public Spitter getSpitter(int id){
         return spitterDaoImpl.findById(id);
     }
 
-    public void updateSpitter(SpitterEnt spitter){
+    public void updateSpitter(Spitter spitter){
         spitterDaoImpl.update(spitter);
     }
 
