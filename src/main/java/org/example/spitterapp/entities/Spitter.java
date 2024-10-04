@@ -25,8 +25,8 @@ public class Spitter {
 
     // cascade -> operations are preformed on the child as well
     // orhpanRemoval -> delete childs in case tha parent gets deleted
-    //@OneToMany(mappedBy = "spitter",cascade = CascadeType.ALL, orphanRemoval = false)
-    //private List<Spittle> spittleList;
+    @OneToMany(mappedBy = "spitter",cascade = CascadeType.ALL, orphanRemoval = false)
+    private List<Spittle> spittleList;
 
     public Spitter(String firstName, String lastName, String password) {
         this.firstName = firstName;

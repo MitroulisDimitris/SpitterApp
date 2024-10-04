@@ -18,13 +18,13 @@ public class Spittle {
     private String datePosted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "authorId", nullable = false)
-    private Spitter autorId;
+    @JoinColumn(name = "spitter", nullable = false)
+    private Spitter spitter;
 
-    public Spittle(String content, String datePosted, Spitter autorId) {
+    public Spittle(String content, String datePosted, Spitter spitter) {
         this.content = content;
         this.datePosted = datePosted;
-        this.autorId = autorId;
+        this.spitter  = spitter;
     }
 
     public Spittle() {
@@ -55,11 +55,8 @@ public class Spittle {
         this.datePosted = datePosted;
     }
 
-    public Spitter getAutorId() {
-        return autorId;
+    public Spitter getSpitter() {
+        return spitter;
     }
-
-    public void setAutorId(Spitter autorId) {
-        this.autorId = autorId;
-    }
+    public void setSpitter(Spitter spitter) { this.spitter = spitter; }
 }

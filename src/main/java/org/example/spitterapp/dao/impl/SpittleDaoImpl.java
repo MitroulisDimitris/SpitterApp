@@ -85,7 +85,7 @@ public class SpittleDaoImpl implements SpittleDao {
 
             if (existingSpittle != null){
                 existingSpittle.setContent(spittle.getContent());
-                existingSpittle.setAutorId(spittle.getAutorId());
+                existingSpittle.setSpitter(spittle.getSpitter());
                 existingSpittle.setDatePosted(spittle.getDatePosted());
             } else {
                 throw new RuntimeException();
