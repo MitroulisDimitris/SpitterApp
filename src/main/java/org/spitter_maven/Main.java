@@ -19,7 +19,7 @@ public class Main {
         System.out.println("Retrieved Spitter: " + spitter.getFirstName());
 
         spittleService.createSpittle("some content","15/10/2025",spitter);
-        // Read Spitter by ID
+        // Read Spittle by ID
         Spittle spittle = spittleService.getSpittle(1);
         System.out.println("Retrieved Spittle: " + spittle.getContent());
     }
