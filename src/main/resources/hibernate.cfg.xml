@@ -24,8 +24,8 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Mapping for Spitter and Spittle entities -->
-        <mapping class="org.example.spitterapp.entities.Spitter" />
-        <mapping class="org.example.spitterapp.entities.Spittle" />
+        <mapping class="org.spitter_maven.spitterapp.entities.Spitter" />
+        <mapping class="org.spitter_maven.spitterapp.entities.Spittle" />
 
     </session-factory>
 </hibernate-configuration>

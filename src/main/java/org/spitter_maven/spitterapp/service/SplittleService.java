@@ -1,8 +1,8 @@
-package org.example.spitterapp.service;
+package org.spitter_maven.spitterapp.service;
 
-import org.example.spitterapp.dao.impl.SpittleDaoImpl;
-import org.example.spitterapp.entities.Spitter;
-import org.example.spitterapp.entities.Spittle;
+import org.spitter_maven.spitterapp.dao.impl.SpittleDaoImpl;
+import org.spitter_maven.spitterapp.entities.Spitter;
+import org.spitter_maven.spitterapp.entities.Spittle;
 
 public class SplittleService {
     SpittleDaoImpl spittleDaoimpl;

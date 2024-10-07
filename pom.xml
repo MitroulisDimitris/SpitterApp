@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--TODO: change example to sth else-->
-    <groupId>org.example</groupId>
+    <groupId>org.spitter_maven</groupId>
     <artifactId>Spitter-Maven</artifactId>
     <version>1.0-SNAPSHOT</version>
 

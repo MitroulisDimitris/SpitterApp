@@ -1,6 +1,6 @@
-package org.example.spitterapp.dao;
+package org.spitter_maven.spitterapp.dao;
 
-import org.example.spitterapp.entities.Spitter;
+import org.spitter_maven.spitterapp.entities.Spitter;
 
 import java.util.List;
 

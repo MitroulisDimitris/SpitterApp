@@ -1,9 +1,9 @@
-package org.example;
+package org.spitter_maven;
 
-import org.example.spitterapp.entities.Spitter;
-import org.example.spitterapp.entities.Spittle;
-import org.example.spitterapp.service.SpitterService;
-import org.example.spitterapp.service.SplittleService;
+import org.spitter_maven.spitterapp.entities.Spitter;
+import org.spitter_maven.spitterapp.entities.Spittle;
+import org.spitter_maven.spitterapp.service.SpitterService;
+import org.spitter_maven.spitterapp.service.SplittleService;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

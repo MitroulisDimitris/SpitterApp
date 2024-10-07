@@ -1,4 +1,4 @@
-package org.example.spitterapp.config;
+package org.spitter_maven.spitterapp.config;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;

@@ -1,4 +1,4 @@
-package org.example.spitterapp.entities;
+package org.spitter_maven.spitterapp.entities;
 
 
 import javax.persistence.*;
@@ -6,7 +6,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "SpitterEnt")
+@Table(name = "Spitter")
 public class Spitter {
 
     @Id

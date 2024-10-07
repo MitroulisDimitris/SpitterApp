@@ -1,121 +1,109 @@
-package org.example.spitterapp.dao.impl;
+package org.spitter_maven.spitterapp.dao.impl;
 
-import org.example.spitterapp.config.HibernateUtil;
-import org.example.spitterapp.dao.SpitterDao;
-import org.example.spitterapp.entities.Spitter;
+import org.spitter_maven.spitterapp.config.HibernateUtil;
+import org.spitter_maven.spitterapp.dao.SpittleDao;
+import org.spitter_maven.spitterapp.entities.Spittle;
 import org.hibernate.HibernateException;
-import org.hibernate.Transaction;
 import org.hibernate.Session;
-import org.hibernate.Query;
+import org.hibernate.Transaction;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class SpitterDaoImpl implements SpitterDao {
-
+public class SpittleDaoImpl implements SpittleDao {
     @Override
-    public Spitter findById(int id) {
+    public Spittle finById(int id) {
+        Spittle spittle = null;
         Transaction transaction = null;
-        Spitter spitter = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-
-            spitter = session.get(Spitter.class,id);
+            spittle = session.get(Spittle.class, id);
             transaction.commit();
 
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             if (transaction != null) {
-                transaction.rollback(); // Rollback the transaction in case of failure
+                transaction.rollback();  // Rollback transaction in case of an error
             }
-            throw new RuntimeException(String.valueOf(e));
+            throw new RuntimeException("Failed to fetch SpittleEnt with id: " + id, e);
         }
-        return spitter;
+
+        return spittle;  // Return the fetched SpittleEnt entity
+
     }
 
     @Override
-    public List<Spitter> findAll() {
+    public List findAll() {
         Transaction transaction = null;
-        List<Spitter> spitters = null;
+        List spittleEnts = new ArrayList<>();
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            // Get all SpitterEnt Entities
-            Query<Spitter> query = session.createQuery("from Spitter", Spitter.class);
-            spitters = query.getResultList();
+            //Get all spittles
+            spittleEnts = session.createQuery("from Spittle").getResultList();
 
             transaction.commit();
-
         }catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
+                throw new RuntimeException(String.valueOf(e));
             }
-            throw new RuntimeException(String.valueOf(e));
-        }
 
-        return spitters;
+        }
+        return spittleEnts;
     }
 
     @Override
-    public void save(Spitter spitter) {
+    public void save(Spittle spittle) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(spitter);
+            session.save(spittle);
             transaction.commit();
-
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();  // Rollback the transaction in case of error
             }
             throw new RuntimeException(e);
         }
-
-
     }
 
     @Override
-    public void update(Spitter spitter) {
+    public void update(Spittle spittle) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Spitter existingSpitter = session.get(Spitter.class, spitter.getUserId());
+            Spittle existingSpittle = session.get(Spittle.class, spittle.getMessageId());
 
-            if (existingSpitter != null){
-                existingSpitter.setFirstName(spitter.getFirstName());
-                existingSpitter.setLastName(spitter.getLastName());
-                existingSpitter.setPassword(spitter.getPassword());
+            if (existingSpittle != null){
+                existingSpittle.setContent(spittle.getContent());
+                existingSpittle.setSpitter(spittle.getSpitter());
+                existingSpittle.setDatePosted(spittle.getDatePosted());
             } else {
                 throw new RuntimeException();
-
             }
             transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();  // Rollback in case of error
-            }
-            throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void delete(int id) {
         Transaction transaction = null;
-
         HibernateUtil hibernateUtil = new HibernateUtil();
 
         try (Session session = hibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Spitter spitter = session.get(Spitter.class , id);
-            if(spitter != null){
-                session.delete(spitter);
+            Spittle spittle = session.get(Spittle.class , id);
+            if(spittle != null){
+                session.delete(spittle);
 
             }else{
                 throw new RuntimeException();
@@ -130,4 +118,3 @@ public class SpitterDaoImpl implements SpitterDao {
         }
     }
 }
-

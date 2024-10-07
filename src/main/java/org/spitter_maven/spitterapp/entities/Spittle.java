@@ -1,9 +1,9 @@
-package org.example.spitterapp.entities;
+package org.spitter_maven.spitterapp.entities;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "SpittleEnt")
+@Table(name = "Spittle")
 public class Spittle {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
