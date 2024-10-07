@@ -5,17 +5,15 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-  <servlet>
-    <servlet-name>MainServlet</servlet-name>
-    <servlet-class>com.example.MainServlet</servlet-class>
+    <servlet>
+    <servlet-name>SpitterController</servlet-name>
+    <servlet-class>spitter_maven.SpitterController</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>MainServlet</servlet-name>
-    <url-pattern>/main</url-pattern>
+    <servlet-name>SpitterController</servlet-name>
+    <url-pattern>/spitters</url-pattern>
   </servlet-mapping>
-
-
 
 </web-app>
 
