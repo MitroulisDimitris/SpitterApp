@@ -1,20 +1,20 @@
 package spitter_maven;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+@WebServlet("/main")
 public class MainServlet extends HttpServlet {
 
-    // Handles GET requests (e.g., when user loads a page)
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Processing logic here
+
         String message = "Hello, this is your Main Servlet!";
 
-        // Set an attribute to be accessed in the JSP page
         request.setAttribute("message", message);
 
         // Forward to JSP page for rendering

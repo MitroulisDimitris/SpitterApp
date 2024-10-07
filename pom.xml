@@ -8,6 +8,12 @@
   <name>SpitterWebApp Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
+  <distributionManagement>
+    <repository>
+      <id>internal-repo</id>
+      <url>C:\Users\dmitr\Desktop\tomcat\apache-tomcat-9.0.87\webapps</url>
+    </repository>
+  </distributionManagement>
 
   <dependencies>
 
@@ -186,5 +192,27 @@
 
   <build>
     <finalName>SpitterWebApp</finalName>
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <copy file="${project.build.directory}/${project.build.finalName}.war"
+                      todir="C:/Users/dmitr/Desktop/tomcat/apache-tomcat-9.0.87/webapps" />
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
   </build>
 </project>
