@@ -14,7 +14,7 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Password</th>
-        <th>Actions</th> <!-- Link to spittles page -->
+        <th>Spittles</th> <!-- Link to spittles page -->
     </tr>
     </thead>
     <tbody>
