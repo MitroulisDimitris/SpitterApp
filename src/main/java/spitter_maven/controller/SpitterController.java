@@ -10,7 +10,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-//@WebServlet("/spitter")
+@WebServlet("/spitter")
 public class SpitterController extends HttpServlet {
 
         private SpitterDaoImpl spitterDaoImpl = new SpitterDaoImpl();

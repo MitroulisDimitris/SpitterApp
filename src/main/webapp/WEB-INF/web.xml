@@ -5,16 +5,6 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-  <!-- SpitterController -->
-  <servlet>
-    <servlet-name>SpitterController</servlet-name>
-    <servlet-class>spitter_maven.controller.SpitterController</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>SpitterController</servlet-name>
-    <url-pattern>/spitter</url-pattern>
-  </servlet-mapping>
 
 
 </web-app>

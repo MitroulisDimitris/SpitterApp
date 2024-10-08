@@ -1,6 +1,7 @@
 package spitter_maven;
 
 
+import spitter_maven.dao.impl.SpittleDaoImpl;
 import spitter_maven.entities.Spitter;
 import spitter_maven.entities.Spittle;
 import spitter_maven.service.SpitterService;
@@ -13,6 +14,7 @@ public class Main {
         SpitterService spitterService = new SpitterService();
         SplittleService spittleService = new SplittleService();
 
+        SpittleDaoImpl spittleDao = new SpittleDaoImpl();
 
         spitterService.createSpitter("John", "Doe", "password123");
         // Read Spitter by ID
@@ -23,5 +25,7 @@ public class Main {
         // Read Spittle by ID
         Spittle spittle = spittleService.getSpittle(1);
         System.out.println("Retrieved Spittle: " + spittle.getContent());
+
+        //System.out.println(spittleDao.findByAuthorId(spitter.getUserId()));
     }
 }

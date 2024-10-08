@@ -38,6 +38,14 @@ public class Spitter {
 
     }
 
+    public List<Spittle> getSpittleList() {
+        return spittleList;
+    }
+
+    public void setSpittleList(List<Spittle> spittleList) {
+        this.spittleList = spittleList;
+    }
+
     public int getUserId() {
         return userId;
     }

@@ -14,6 +14,7 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Password</th>
+        <th>Actions</th> <!-- Link to spittles page -->
     </tr>
     </thead>
     <tbody>
@@ -27,7 +28,10 @@
         <td><%= spitter.getFirstName() %></td>
         <td><%= spitter.getLastName() %></td>
         <td><%= spitter.getPassword() %></td>
-
+        <td>
+            <!-- Action link to spittles/id=x -->
+            <a href="spittles?authorId=<%= spitter.getUserId() %>">View Spittles</a>
+        </td>
     </tr>
     <%
         }
