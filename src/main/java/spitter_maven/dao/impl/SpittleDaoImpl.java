@@ -3,6 +3,8 @@ package spitter_maven.dao.impl;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import spitter_maven.config.HibernateUtil;
 import spitter_maven.dao.SpittleDao;
 import spitter_maven.entities.Spittle;
@@ -13,8 +15,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+@Repository
 public class SpittleDaoImpl implements SpittleDao {
     @Override
+    @Transactional
     public Spittle finById(int id) {
         Spittle spittle = null;
         Transaction transaction = null;
@@ -37,6 +41,7 @@ public class SpittleDaoImpl implements SpittleDao {
     }
 
     @Override
+    @Transactional
     public List findAll() {
         Transaction transaction = null;
         List spittleEnts = new ArrayList<>();
@@ -60,6 +65,7 @@ public class SpittleDaoImpl implements SpittleDao {
     }
 
     @Override
+    @Transactional
     public void save(Spittle spittle) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
@@ -77,6 +83,7 @@ public class SpittleDaoImpl implements SpittleDao {
     }
 
     @Override
+    @Transactional
     public void update(Spittle spittle) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
@@ -97,6 +104,7 @@ public class SpittleDaoImpl implements SpittleDao {
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
@@ -120,6 +128,7 @@ public class SpittleDaoImpl implements SpittleDao {
         }
     }
 
+    @Transactional
     public List<Spittle> findByAuthorId(int authorId) {
         Transaction transaction = null;
         List<Spittle> spittles = null;

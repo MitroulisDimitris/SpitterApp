@@ -1,5 +1,9 @@
 package spitter_maven.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import spitter_maven.dao.impl.SpitterDaoImpl;
 import spitter_maven.entities.Spitter;
 import spitter_maven.service.SpitterService;
@@ -10,31 +14,21 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/spitter")
+@Controller
 public class SpitterController extends HttpServlet {
 
-        private SpitterDaoImpl spitterDaoImpl = new SpitterDaoImpl();
+     @Autowired
+    private SpitterService spitterService;
 
-        @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @GetMapping("/splitter")
+        public String  listSplitters(Model model) {
+            // Fetch all splitter objects
+            List<Spitter> spitters = spitterService.getAllSpitters();
 
-            // Fetch all Spitter objects
-            List<Spitter> spitters = spitterDaoImpl.findAll();
+            //add data to the model to pass to the view
+            model.addAttribute("spitters", spitters);
 
-            request.setAttribute("spitters", spitters);
-            request.setAttribute("test", "testing complete");
-
-            // Forward to the JSP page
-            request.getRequestDispatcher("/WEB-INF/views/spitter.jsp").forward(request, response);
-
-            //RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/spitter.jsp");
-            //dispatcher.forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
+            //return name of the view
+            return "spitter";
+       }
 }

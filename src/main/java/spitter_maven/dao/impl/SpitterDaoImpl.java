@@ -4,16 +4,19 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import spitter_maven.config.HibernateUtil;
 import spitter_maven.dao.SpitterDao;
 import spitter_maven.entities.Spitter;
 
-
 import java.util.List;
 
+@Repository
 public class SpitterDaoImpl implements SpitterDao {
 
     @Override
+    @Transactional
     public Spitter findById(int id) {
         Transaction transaction = null;
         Spitter spitter = null;
@@ -35,6 +38,7 @@ public class SpitterDaoImpl implements SpitterDao {
     }
 
     @Override
+    @Transactional
     public List<Spitter> findAll() {
         Transaction transaction = null;
         List<Spitter> spitters = null;
@@ -60,6 +64,7 @@ public class SpitterDaoImpl implements SpitterDao {
     }
 
     @Override
+    @Transactional
     public void save(Spitter spitter) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
@@ -80,6 +85,7 @@ public class SpitterDaoImpl implements SpitterDao {
     }
 
     @Override
+    @Transactional
     public void update(Spitter spitter) {
         Transaction transaction = null;
         HibernateUtil hibernateUtil = new HibernateUtil();
@@ -107,6 +113,7 @@ public class SpitterDaoImpl implements SpitterDao {
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
         Transaction transaction = null;
 
