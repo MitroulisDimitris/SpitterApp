@@ -18,8 +18,7 @@ import java.util.List;
 
 @Controller
 public class SpittleController extends HttpServlet {
-    @Autowired
-    private SpittleDaoImpl spittleDaoImpl = new SpittleDaoImpl();
+
     @Autowired
     private SplittleService splittleService;
 

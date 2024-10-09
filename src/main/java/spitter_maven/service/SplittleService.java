@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spitter_maven.dao.SpittleDao;
 import spitter_maven.dao.impl.SpittleDaoImpl;
 import spitter_maven.entities.Spitter;
 import spitter_maven.entities.Spittle;
@@ -14,7 +15,7 @@ import java.util.List;
 public class SplittleService {
 
     @Autowired
-    private SpittleDaoImpl spittleDaoimpl;
+    private SpittleDao spittleDaoimpl;
 
     public SplittleService(){
          spittleDaoimpl = new SpittleDaoImpl();

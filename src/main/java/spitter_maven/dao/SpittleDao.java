@@ -11,4 +11,5 @@ public interface SpittleDao {
     void save(Spittle spittle);
     void update(Spittle spittle);
     void delete(int id);
+    List<Spittle> findByAuthorId(int authorId);
 }
