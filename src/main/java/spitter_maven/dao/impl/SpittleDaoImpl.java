@@ -2,7 +2,10 @@ package spitter_maven.dao.impl;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import spitter_maven.config.HibernateUtil;
@@ -16,151 +19,77 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
+@Transactional
 public class SpittleDaoImpl implements SpittleDao {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
-    @Transactional
     public Spittle finById(int id) {
-        Spittle spittle = null;
-        Transaction transaction = null;
-        HibernateUtil hibernateUtil = new HibernateUtil();
-
-        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            spittle = session.get(Spittle.class, id);
-            transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();  // Rollback transaction in case of an error
-            }
-            throw new RuntimeException("Failed to fetch SpittleEnt with id: " + id, e);
-        }
-
-        return spittle;  // Return the fetched SpittleEnt entity
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Spittle.class,id);
 
     }
 
     @Override
-    @Transactional
     public List findAll() {
-        Transaction transaction = null;
-        List spittleEnts = new ArrayList<>();
-        HibernateUtil hibernateUtil = new HibernateUtil();
-
-        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            //Get all spittles
-            spittleEnts = session.createQuery("from Spittle").getResultList();
-
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-                throw new RuntimeException(String.valueOf(e));
-            }
-
-        }
-        return spittleEnts;
+        Session session = sessionFactory.getCurrentSession();
+        Query<Spittle> query = session.createQuery("from Spittle",Spittle.class);
+        return query.getResultList();
     }
 
     @Override
-    @Transactional
     public void save(Spittle spittle) {
-        Transaction transaction = null;
-        HibernateUtil hibernateUtil = new HibernateUtil();
-
-        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(spittle);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();  // Rollback the transaction in case of error
-            }
-            throw new RuntimeException(e);
-        }
+        Session session = sessionFactory.getCurrentSession();
+        session.save(spittle);
     }
 
     @Override
-    @Transactional
     public void update(Spittle spittle) {
-        Transaction transaction = null;
-        HibernateUtil hibernateUtil = new HibernateUtil();
+        Session session = sessionFactory.getCurrentSession();
+        Spittle existingSpittle = session.get(Spittle.class, spittle.getMessageId());
+        if (existingSpittle != null) {
+            existingSpittle.setContent(spittle.getContent());
+            existingSpittle.setSpitter(spittle.getSpitter());
+            existingSpittle.setDatePosted(spittle.getDatePosted());
 
-        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            Spittle existingSpittle = session.get(Spittle.class, spittle.getMessageId());
-
-            if (existingSpittle != null) {
-                existingSpittle.setContent(spittle.getContent());
-                existingSpittle.setSpitter(spittle.getSpitter());
-                existingSpittle.setDatePosted(spittle.getDatePosted());
-            } else {
-                throw new RuntimeException();
-            }
-            transaction.commit();
+        } else {
+            throw new RuntimeException("Spitter not found for ID: " + spittle.getMessageId());
         }
+
     }
 
     @Override
-    @Transactional
     public void delete(int id) {
-        Transaction transaction = null;
-        HibernateUtil hibernateUtil = new HibernateUtil();
+       Session session = sessionFactory.getCurrentSession();
+       Spittle spittle = session.get(Spittle.class, id);
+       if (spittle != null) {
+           session.delete(spittle);
 
-        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            Spittle spittle = session.get(Spittle.class, id);
-            if (spittle != null) {
-                session.delete(spittle);
-
-            } else {
-                throw new RuntimeException();
-            }
-            transaction.commit();
-
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();  // Rollback in case of error
-            }
-            throw new RuntimeException(e);
-        }
+       } else {
+           throw new RuntimeException("Spittle not found ofr id"+id);
+       }
     }
 
-    @Transactional
+    @Override
     public List<Spittle> findByAuthorId(int authorId) {
-        Transaction transaction = null;
-        List<Spittle> spittles = null;
-        HibernateUtil hibernateUtil = new HibernateUtil();
+        Session session = sessionFactory.getCurrentSession();
 
-        try (Session session = hibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+        // Create CriteriaBuilder
+        CriteriaBuilder builder = session.getCriteriaBuilder();
 
-            // Create CriteriaBuilder
-            CriteriaBuilder builder = session.getCriteriaBuilder();
+        // Create CriteriaQuery
+        CriteriaQuery<Spittle> query = builder.createQuery(Spittle.class);
 
-            // Create CriteriaQuery
-            CriteriaQuery<Spittle> query = builder.createQuery(Spittle.class);
+        // Define the root (from Spittle entity)
+        Root<Spittle> root = query.from(Spittle.class);
 
-            // Define the root (from Spittle entity)
-            Root<Spittle> root = query.from(Spittle.class);
+        // Add a condition to match the authorId (foreign key reference)
+        query.select(root).where(builder.equal(root.get("spitter"), authorId));
 
-            // Add a condition to match the authorId
-            query.select(root).where(builder.equal(root.get("spitter"), authorId));
-
-            // Execute the query and get the result list
-            spittles = session.createQuery(query).getResultList();
-
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();  // Rollback transaction in case of an error
-            }
-            throw new RuntimeException("Failed to fetch spittles for authorId: " + authorId, e);
-        }
-
-        return spittles;  // Return the list of Spittle entities
+        // Execute the query and get the result list
+        return session.createQuery(query).getResultList();
     }
 
 
