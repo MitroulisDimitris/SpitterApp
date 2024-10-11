@@ -12,10 +12,11 @@
            http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- Enable component scanning -->
-    <context:component-scan base-package="spitter_maven, resources"/>
+    <context:component-scan base-package="spitter_maven.Repositories" />
+    <context:component-scan base-package="spitter_maven.service" />
+    <context:component-scan base-package="spitter_maven.entities" />
+    <context:component-scan base-package="spitter_maven.controller" />
 
-    <!-- Enable transaction management -->
-    <tx:annotation-driven/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
@@ -44,9 +45,23 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!-- TransactionManager bean -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
+    <!-- JPA Entity Manager configuration -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="spitter_maven.entities"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- Transaction Manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
 

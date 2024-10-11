@@ -3,47 +3,37 @@ package spitter_maven.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import spitter_maven.dao.SpitterDao;
-import spitter_maven.dao.impl.SpitterDaoImpl;
+
+import spitter_maven.Repositories.SpitterRepository;
 import spitter_maven.entities.Spitter;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class SpitterService {
 
     @Autowired
-    private SpitterDao spitterDaoImpl;
+    private SpitterRepository spitterRepository;
 
-    public SpitterService(){
-        this.spitterDaoImpl = new SpitterDaoImpl();
+    public Spitter findById(int id) {
+        return spitterRepository.findById((long) id).orElse(null); // Returns null if not found
     }
 
-    @Transactional
-    public void createSpitter(String firstName, String lastName, String password) {
-        Spitter spitter = new Spitter(firstName,lastName,password);
-        spitterDaoImpl.save(spitter);
+    public List<Spitter> findAll() {
+        return spitterRepository.findAll();
     }
 
-    @Transactional
-    public Spitter getSpitter(int id){
-        return spitterDaoImpl.findById(id);
+    public Spitter save(Spitter spitter) {
+        return spitterRepository.save(spitter);
     }
 
-    @Transactional
-    public void updateSpitter(Spitter spitter){
-        spitterDaoImpl.update(spitter);
+    public Spitter update(Spitter spitter) {
+        return spitterRepository.save(spitter); // Save will handle both insert and update
     }
 
-    @Transactional
-    public void deleteSpitter(int id) {
-        spitterDaoImpl.delete(id);
+    public void delete(int id) {
+        spitterRepository.deleteById((long) id);
     }
-
-    @Transactional
-    public List<Spitter> getAllSpitters(){
-        return spitterDaoImpl.findAll();
-    }
-    
 }
 

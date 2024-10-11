@@ -19,7 +19,7 @@ public class SpitterController {
     @GetMapping("/spitter")
     public String  listSpitters(Model model) {
         // Fetch all splitter objects
-        List<Spitter> spitters = spitterService.getAllSpitters();
+        List<Spitter> spitters = spitterService.findAll();
 
         //add data to the model to pass to the view
         model.addAttribute("spitters", spitters);

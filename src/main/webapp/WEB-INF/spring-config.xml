@@ -2,17 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/cache"
+       xmlns:tx="http://www.springframework.org/schema/cache" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <!-- Enable annotation-driven configuration -->
     <context:annotation-config/>
 
     <!-- Component scanning for controllers and services -->
-    <context:component-scan base-package="spitter_maven"/>
+    <context:component-scan base-package="spitter_maven.service" />
+    <context:component-scan base-package="spitter_maven.controller" />
+
+    <jpa:repositories base-package="spitter_maven.Repositories"/>
     <tx:annotation-driven/>
 
     <!-- Define view resolver -->
@@ -21,6 +24,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <jpa:repositories base-package="spitter_maven.Repositories" />
 
 
 </beans>
