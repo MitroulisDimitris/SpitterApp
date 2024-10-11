@@ -20,7 +20,7 @@ public class SpitterService {
     }
     @Transactional(readOnly = true)
     public Spitter findById(int id) {
-        return spitterRepository.findById((long) id).orElse(null); // Returns null if not found
+        return spitterRepository.findById(id).orElse(null); // Returns null if not found
     }
 
     @Transactional(readOnly = true)
@@ -37,7 +37,7 @@ public class SpitterService {
     }
     @Transactional
     public void delete(int id) {
-        spitterRepository.deleteById((long) id);
+        spitterRepository.deleteById(id);
     }
 }
 

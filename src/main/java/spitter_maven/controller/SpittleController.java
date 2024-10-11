@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import spitter_maven.entities.Spitter;
 import spitter_maven.entities.Spittle;
+import spitter_maven.service.SpitterService;
 import spitter_maven.service.SpittleService;
 
 
@@ -20,15 +21,17 @@ public class SpittleController extends HttpServlet {
 
     @Autowired
     private SpittleService splittleService;
+    @Autowired
+    private SpitterService spitterService;
+
 
 
     @GetMapping("/spittles")
     public String listSpittles(@RequestParam(value = "authorId", required = false) Integer authorId, Model model) {
         if (authorId != null) {
-            List<Spittle> spittles = splittleService.findSpittlesByAuthorId(authorId);
+            Spitter spitter = spitterService.findById(authorId);
+            List<Spittle> spittles = splittleService.findSpittlesBySpitter(spitter);
             model.addAttribute("spittles", spittles);
-
-
         }
         return "spittles";
     }

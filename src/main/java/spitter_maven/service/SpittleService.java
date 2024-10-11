@@ -4,6 +4,7 @@ package spitter_maven.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spitter_maven.entities.Spitter;
 import spitter_maven.repository.SpittleRepository;
 import spitter_maven.entities.Spittle;
 
@@ -23,7 +24,7 @@ public class SpittleService {
 
     @Transactional
     public Spittle findById( int id) {
-        return spittleRepository.findById((long) id).orElse(null);
+        return spittleRepository.findById(id).orElse(null);
     }
 
     @Transactional
@@ -42,11 +43,10 @@ public class SpittleService {
 
     @Transactional
     public void delete(int id) {
-        spittleRepository.deleteById((long) id);
+        spittleRepository.deleteById(id);
     }
     @Transactional
-    public List<Spittle> findSpittlesByAuthorId(int authorId) {
-        return null;
-        //return spittleRepository.findByAuthorId(authorId);
+    public List<Spittle> findSpittlesBySpitter(Spitter spitter ) {
+        return spittleRepository.findBySpitter(spitter);
     }
 }

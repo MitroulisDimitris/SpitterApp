@@ -5,6 +5,6 @@ import spitter_maven.entities.Spitter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface SpitterRepository extends JpaRepository<Spitter, Long> {
+public interface SpitterRepository extends JpaRepository<Spitter, Integer> {
     Spitter findByFirstName(String username);
 }
