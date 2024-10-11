@@ -15,7 +15,7 @@
     <mvc:annotation-driven/>
 
     <!-- Enable component scanning for controllers -->
-    <context:component-scan base-package="spitter_maven.controller"/>
+    <context:component-scan base-package="spitter_maven"/>
 
     <!-- View resolver configuration -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

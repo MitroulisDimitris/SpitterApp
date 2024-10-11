@@ -1,4 +1,4 @@
-package spitter_maven.Repositories;
+package spitter_maven.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface SpittleRepository extends JpaRepository<Spittle, Long> {
-    List<Spittle> findByAuthorId(int authorId);
+    //List<Spittle> findByAuthorId(int authorId);
 }
