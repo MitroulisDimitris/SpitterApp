@@ -8,7 +8,7 @@ public class HibernateUtil {
 
     private final SessionFactory sessionFactory;
 
-    // Constructor
+    // Constructor class
     public HibernateUtil() {
         try {
             this.sessionFactory = new Configuration().configure().buildSessionFactory();
