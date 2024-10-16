@@ -1,0 +1,10 @@
+org\spitterwebapp\spitterspringbootapp\repository\SpitterRepository.class
+org\spitterwebapp\spitterspringbootapp\repository\SpittleRepository.class
+org\spitterwebapp\spitterspringbootapp\service\SpittleService.class
+org\spitterwebapp\spitterspringbootapp\config\HibernateUtil.class
+org\spitterwebapp\spitterspringbootapp\controller\SpittleController.class
+org\spitterwebapp\spitterspringbootapp\entities\Spittle.class
+org\spitterwebapp\spitterspringbootapp\service\SpitterService.class
+org\spitterwebapp\spitterspringbootapp\entities\Spitter.class
+org\spitterwebapp\spitterspringbootapp\SpitterSpringBootAppApplication.class
+org\spitterwebapp\spitterspringbootapp\controller\SpitterController.class
